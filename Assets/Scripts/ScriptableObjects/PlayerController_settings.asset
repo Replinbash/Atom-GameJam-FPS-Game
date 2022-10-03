@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 914565bb58ec44346afcb70d66bce262, type: 3}
+  m_Name: PlayerController_settings
+  m_EditorClassIdentifier: 
+  CurrentSpeed: 10
+  MaxSpeed: 20
+  AccelerationSpeed: 10
+  Gravity: -25
+  JumpHeight: 1
+  MouseSensitivity: 150
+  MaxHealth: 100
+  Stamina: 50
+  MaxStamina: 50
+  StaminaAmount: 10
+  Damage: 25
+  ProjectileSpeed: 30
+  FireRate: 1.25
+  ArcRange: 2
+  ProjectileAmount: 10
+  ShieldAmount: 3.25
+  Charge: 50
+  MaxCharge: 50

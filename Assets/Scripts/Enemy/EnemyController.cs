@@ -1,0 +1,105 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace GameJam.Enemies
+{
+    public abstract class EnemyController : MonoBehaviour
+    {
+        [SerializeField] protected Transform _player;
+        [SerializeField] protected EnemyControllerSettings _enemySettings;
+
+        [SerializeField] protected Transform[] _weaponTransform;
+        [SerializeField] protected GameObject[] _weaponPrefab;
+
+        protected NavMeshAgent _navMesh = null;
+        protected Animator _animation = null;
+        protected EnemyStats _enemyStats = null;
+        protected CharacterStats _playerStats = null;
+
+        protected bool _hasStopped = false;
+        protected bool _startAttack = false;
+        protected bool _canAttack = false;
+        protected float _timeOfLastAttack = 0;
+
+        public static event Action CombatBehaviour;
+
+        private void Awake()
+        {           
+            _navMesh = GetComponent<NavMeshAgent>();
+            _animation = GetComponentInChildren<Animator>();
+            _enemyStats = GetComponent<EnemyStats>();
+            _playerStats = _player.GetComponent<CharacterStats>();
+            SpawnWeapon();
+        }
+
+
+        private void Update()
+        {
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                _startAttack = true;
+            }
+
+            if (_startAttack)
+            {
+                StartCoroutine(Attack());
+            }
+        }
+
+        protected void SpawnWeapon()
+        {
+            for (int i = 0; i < _weaponPrefab.Length; i++)
+            {
+                Instantiate(_weaponPrefab[i], _weaponTransform[i]);
+            }
+        }
+
+        protected void RotateToPlayer()
+        {
+            //transform.LookAt(_player);
+            Vector3 direction = _player.position - this.transform.position;
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+            transform.rotation = rotation;
+        }
+
+        protected abstract void AttackSequence();
+
+        protected IEnumerator Attack()
+        {
+            RotateToPlayer();
+            var destinationToPlayer = Vector3.Distance(transform.position, _player.position);
+
+            // Enemy playera doðru koþuyor.
+            if (!_canAttack)
+            {
+                _navMesh.SetDestination(_player.position);
+                _animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
+            }  
+
+            // Attack yaptýktan sonra bekleme süresi
+            if (destinationToPlayer > _navMesh.stoppingDistance && _canAttack)
+            {
+                yield return new WaitForSeconds(0.80f);
+                _canAttack = false;
+            }
+
+            // Attack aný.
+            if (destinationToPlayer < _navMesh.stoppingDistance)
+            {
+                _animation.SetFloat("Speed", 0f);
+                CombatBehaviour?.Invoke();
+            }
+
+            // Enemy saldýrýya geciyor
+            else if (_hasStopped) _hasStopped = false;
+
+        }
+
+        
+    }
+}
+
