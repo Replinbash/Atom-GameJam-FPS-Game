@@ -2,28 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameJam.Player;
+using System;
+using Random = UnityEngine.Random;
 
 namespace GameJam.PlayerCombat
 {
     public class MagicSkills : MonoBehaviour
     {
+        [SerializeField] private GameObject[] _projectTiles;
         [SerializeField] private CharacterControllerSettings _playerSettings;
-        [SerializeField] private Animator _animator;
         [SerializeField] private ChargeManager _chargeManager;
         [SerializeField] private Camera _cam;
-        [SerializeField] private GameObject[] _projectTiles;
         [SerializeField] private GameObject _fireShield;
-        [SerializeField] private GameObject _SpecialAttack;
         [SerializeField] private Transform _LHFirePoint, _RHFirePoint, _MHFirePoint;        
         
+        private Animator _animator;
         private Vector3 _destination;      
         private bool _leftHand;
         private float _timeToFire;
 
-        public static event System.Action <bool> SetDamage;
+        public static event Action <bool> SetDamage;
 
-        // Inputs
-        public bool IsPressLeft => Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow);
+        private void Awake()
+        {
+			_animator = GetComponent<Animator>();
+
+		}
 
         private void Start() => _chargeManager.DisableShield(_fireShield);    
         
@@ -55,17 +59,6 @@ namespace GameJam.PlayerCombat
                 _chargeManager.DisableShield(_fireShield);
                 SetDamage?.Invoke(_chargeManager.canDefense);
             }
-
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                _animator.SetBool("ulti", true);
-                ShootUlti();
-            }
-
-            else if (Input.GetKeyUp(KeyCode.Q))
-            {
-                _animator.SetBool("ulti", false);
-            }
         }
         #endregion
 
@@ -86,12 +79,6 @@ namespace GameJam.PlayerCombat
             {
                 _destination = ray.GetPoint(1000);
             }
-        }
-
-        private void ShootUlti()
-        {
-            //RayMethod();
-            var projectileObj = Instantiate(_SpecialAttack, _MHFirePoint.position, Quaternion.identity);
         }
 
         private void ShootProjectTile()

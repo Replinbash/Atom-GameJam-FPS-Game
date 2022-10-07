@@ -15,8 +15,8 @@ MonoBehaviour:
   CurrentSpeed: 10
   MaxSpeed: 20
   AccelerationSpeed: 10
-  Gravity: -25
-  JumpHeight: 1
+  Gravity: -30
+  JumpHeight: 0.5
   MouseSensitivity: 150
   MaxHealth: 100
   Stamina: 50

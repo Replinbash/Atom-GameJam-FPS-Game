@@ -14,10 +14,12 @@ namespace GameJam.PlayerCombat
         private bool _canRun;
         private float _speed;
 
-
-        private void Start()
+        private void Awake()
         {
-            _playerStats = GetComponent<PlayerStats>();
+			_playerStats = GetComponent<PlayerStats>();
+		}
+        private void Start()
+        {           
             _speed = _playerSettings.CurrentSpeed;
         }
 
@@ -72,7 +74,8 @@ namespace GameJam.PlayerCombat
                     _playerSettings.MaxSpeed, _playerSettings.AccelerationSpeed * Time.deltaTime);                                       
                 }
                 
-                if (_playerSettings.Stamina <= 0 || !_canRun) DisableRun();             
+                if (_playerSettings.Stamina <= 0 || !_canRun) 
+                    DisableRun();             
             }
 
             StaminaSystem();
@@ -92,14 +95,16 @@ namespace GameJam.PlayerCombat
         {
             _playerStats.ChargeControl(true);           
 
-            if (_playerSettings.Charge < _playerSettings.MaxCharge) _playerStats.ChargeControl(false);         
+            if (_playerSettings.Charge < _playerSettings.MaxCharge) 
+                _playerStats.ChargeControl(false);         
         }
 
         public void StaminaSystem()
         {
             _playerStats.StaminaControl(true);
 
-            if (_playerSettings.Stamina < _playerSettings.MaxStamina) _playerStats.StaminaControl(false);
+            if (_playerSettings.Stamina < _playerSettings.MaxStamina) 
+                _playerStats.StaminaControl(false);
         }
         #endregion
     }

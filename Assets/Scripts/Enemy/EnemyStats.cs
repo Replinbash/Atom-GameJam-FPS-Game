@@ -49,16 +49,7 @@ namespace GameJam.Enemies
 
         private void FreezeDamage(bool isDefense)
         {
-            _enemySettings.Damage = (isDefense) ? _enemySettings.Damage = 0 : _enemySettings.Damage = _initialDamage;
-            /*if (isDefense)
-            {
-                _enemySettings.Damage = 0;
-            }
-
-            else
-            {
-                _enemySettings.Damage = _initialDamage;
-            }*/
+            _enemySettings.Damage = (isDefense) ? _enemySettings.Damage = 0 : _enemySettings.Damage = _initialDamage;            
         }
     }
 }

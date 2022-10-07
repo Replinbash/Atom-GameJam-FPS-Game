@@ -8,11 +8,10 @@ namespace GameJam.Enemies
 {
     public abstract class EnemyController : MonoBehaviour
     {
-        [SerializeField] protected Transform _player;
-        [SerializeField] protected EnemyControllerSettings _enemySettings;
-
-        [SerializeField] protected Transform[] _weaponTransform;
-        [SerializeField] protected GameObject[] _weaponPrefab;
+		[SerializeField] protected Transform[] _weaponTransform;
+		[SerializeField] protected GameObject[] _weaponPrefab;
+		[SerializeField] protected Transform _player;
+        [SerializeField] protected EnemyControllerSettings _enemySettings;        
 
         protected NavMeshAgent _navMesh = null;
         protected Animator _animation = null;
@@ -31,10 +30,13 @@ namespace GameJam.Enemies
             _navMesh = GetComponent<NavMeshAgent>();
             _animation = GetComponentInChildren<Animator>();
             _enemyStats = GetComponent<EnemyStats>();
-            _playerStats = _player.GetComponent<CharacterStats>();
-            SpawnWeapon();
+            _playerStats = _player.GetComponent<CharacterStats>();            
         }
 
+        private void OnEnable()
+        {
+			SpawnWeapon();
+		}
 
         private void Update()
         {
@@ -60,10 +62,10 @@ namespace GameJam.Enemies
 
         protected void RotateToPlayer()
         {
-            //transform.LookAt(_player);
             Vector3 direction = _player.position - this.transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = rotation;
+            //transform.LookAt(_player);
         }
 
         protected abstract void AttackSequence();

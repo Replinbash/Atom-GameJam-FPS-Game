@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using GameJam.Player;
 
 public class InteractWithNPC : MonoBehaviour
@@ -9,7 +8,7 @@ public class InteractWithNPC : MonoBehaviour
     [SerializeField] private GameObject _npc;
     [SerializeField] private GameObject _readyTalk;
     [SerializeField] private GameObject _infoPanel;
-    [SerializeField] private PlayerController _player;
+    [SerializeField] private PlayerMovementController _player;
 
     private float _distance;
     private bool _isTalking = true;

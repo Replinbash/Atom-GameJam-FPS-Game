@@ -28,7 +28,7 @@ public class Arrow : MonoBehaviour
     private void Update()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * _controllerSettings.LaunchSpeed * 1000);
+        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * _controllerSettings.LaunchSpeed * 1500);
         if (transform.parent != null)
         {
             currentTime += Time.deltaTime;

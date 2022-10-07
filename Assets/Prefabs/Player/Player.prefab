@@ -2962,14 +2962,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a81db960afbad548ac62de3d001ffa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _projectTiles:
+  - {fileID: 1017280539296978691, guid: 54508ac7213f1624080c29bc4f8ac385, type: 3}
+  - {fileID: 5589213900870833644, guid: d379c978199587743b07d06fd347239b, type: 3}
   _playerSettings: {fileID: 11400000, guid: 723f20a6f1dc7704abedff90ba4c6fdb, type: 2}
   _animator: {fileID: 857384367}
   _chargeManager: {fileID: 1531251829}
   _cam: {fileID: 963194227}
-  _projectTiles:
-  - {fileID: 1017280539296978691, guid: 54508ac7213f1624080c29bc4f8ac385, type: 3}
-  - {fileID: 5589213900870833644, guid: d379c978199587743b07d06fd347239b, type: 3}
   _fireShield: {fileID: 5977132989639246245}
+  _SpecialAttack: {fileID: 8420738349510190273, guid: 48bbbc8ea4c645342ab57384d493b934, type: 3}
   _LHFirePoint: {fileID: 7150596782639220763}
   _RHFirePoint: {fileID: 6868841457441559476}
   _MHFirePoint: {fileID: 1190024349337263914}
@@ -8413,7 +8414,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3472885967523277778}
   m_LocalRotation: {x: 0.25657442, y: 0.6424806, z: 0.63736594, w: 0.33934194}
-  m_LocalPosition: {x: -0.00069, y: -0.0030370392, z: -0.0015681845}
+  m_LocalPosition: {x: -0.00069, y: -0.01744, z: -0.00157}
   m_LocalScale: {x: 1, y: 1.0000001, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

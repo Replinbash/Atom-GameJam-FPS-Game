@@ -7,21 +7,21 @@ namespace GameJam.Enemies
     public class RangeAttack : EnemyController
     {
         [SerializeField] private Queue<GameObject> pooledObjects; // object pooling queue
-        [SerializeField] private GameObject arrowPrefab;
+        [SerializeField] private GameObject _arrowPrefab;
         [SerializeField] private Transform _arrowTransform;
-        [SerializeField] private int poolSize;
+        [SerializeField] private int _poolSize;
 
         private Arrow _arrowScript;
-        private GameObject poolHolder;
-        private Transform poolHolderTrans;
+        private GameObject _poolHolder;
+        private Transform _poolHolderTrans;
         private float _timeToFire;
 
         private void Start()
         {
             CombatBehaviour += AttackSequence;           
 
-            poolHolder = new GameObject(transform.name + " Arrow Pool");
-            poolHolderTrans = poolHolder.gameObject.transform;
+            _poolHolder = new GameObject(transform.name + " Arrow Pool");
+            _poolHolderTrans = _poolHolder.gameObject.transform;
 
             CreatePool();
         }
@@ -62,12 +62,12 @@ namespace GameJam.Enemies
         {
             pooledObjects = new Queue<GameObject>();
 
-            for (int i = 0; i < poolSize; i++)
+            for (int i = 0; i < _poolSize; i++)
             {
-                GameObject _obj = Instantiate(arrowPrefab, poolHolderTrans); //Obje oluþtur
+                GameObject _obj = Instantiate(_arrowPrefab, _poolHolderTrans); //Obje oluþtur
                 _arrowScript = _obj.GetComponent<Arrow>();
                 _arrowScript._rangeAttack = this;
-                _arrowScript._arrowTransformParent = poolHolderTrans;
+                _arrowScript._arrowTransformParent = _poolHolderTrans;
                 
                 _obj.SetActive(false); //Objeyi kapat
                 pooledObjects.Enqueue(_obj); //Objeyi listeye ekle               
@@ -76,11 +76,11 @@ namespace GameJam.Enemies
 
         public void AddExtraArrowPool()
         {
-            GameObject _obj = Instantiate(arrowPrefab); //Obje oluþtur
-            _obj.transform.parent = poolHolderTrans; // Objeleri boþ bir objenin altýna toplar.
+            GameObject _obj = Instantiate(_arrowPrefab); //Obje oluþtur
+            _obj.transform.parent = _poolHolderTrans; // Objeleri boþ bir objenin altýna toplar.
             _obj.SetActive(false); //Objeyi kapat
             pooledObjects.Enqueue(_obj); //Objeyi listeye ekle
-            poolSize++; //Objeyi çoðalt
+            _poolSize++; //Objeyi çoðalt
         }
 
         public GameObject GetPooledObject(Vector3 position, Vector3 direction)
