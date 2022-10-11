@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Defence",
+                    "type": "Button",
+                    "id": "4d8b8ae5-dcfa-4392-b979-59f82a97e926",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "d0d85176-6fc5-486b-bc5c-36cdd4cb6a54",
@@ -246,17 +255,6 @@
                     "name": "",
                     "id": "4c248131-d3fe-4545-b4dc-ba0690c01312",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardOrGamepad",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a2fd0671-1859-4c52-baaa-3d4ad7f9aa84",
-                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardOrGamepad",
@@ -494,6 +492,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "1906a23b-1083-4674-b398-6f71c1520e2c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardOrGamepad",
+                    "action": "Defence",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

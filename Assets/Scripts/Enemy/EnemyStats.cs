@@ -7,17 +7,32 @@ namespace GameJam.Enemies
     public class EnemyStats : CharacterStats
     {
         [SerializeField] private EnemyControllerSettings _enemySettings;
-
         private int _initialDamage;
 
-        private void Start()
-        {
-            InitVariables();
-            PlayerCombat.RangeSpellSkill.SetDamage += FreezeDamage;
-        }
+		private void OnEnable()
+		{
+			PlayerCombat.DefenceSkill.SetDamage += FreezeDamage;
+		}
 
-        // DealDamage: Hasar vermek.
-        public void DealDamage(CharacterStats statsToDamage)
+		private void OnDisable()
+		{
+			PlayerCombat.DefenceSkill.SetDamage -= FreezeDamage;
+		}
+
+		private void Start()
+        {
+            InitVariables();            
+        }       
+
+        public override void InitVariables()
+		{
+			base.InitVariables();
+			maxHealth = _enemySettings.MaxHealth;
+			_initialDamage = _enemySettings.Damage;
+			SetHealthTo(maxHealth);
+		}
+
+		public void DealDamage(CharacterStats statsToDamage)
         {
             if (statsToDamage == null)
             {
@@ -26,7 +41,6 @@ namespace GameJam.Enemies
 
             else
             {
-                // Take Damage: hasar almak.
                 statsToDamage.TakeDamage(_enemySettings.Damage);
             }
         }
@@ -37,19 +51,11 @@ namespace GameJam.Enemies
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<EnemyBaseAttack>().enabled = false;
             Destroy(gameObject, 3);
-        }
-
-        public override void InitVariables()
-        {
-            base.InitVariables();
-            maxHealth = _enemySettings.MaxHealth;
-            _initialDamage = _enemySettings.Damage;
-            SetHealthTo(maxHealth);
-        }
+        }       
 
         private void FreezeDamage(bool isDefense)
         {
-            _enemySettings.Damage = (isDefense) ? _enemySettings.Damage = 0 : _enemySettings.Damage = _initialDamage;            
+            _enemySettings.Damage = isDefense ? _enemySettings.Damage = 0 : _enemySettings.Damage = _initialDamage;            
         }
     }
 }

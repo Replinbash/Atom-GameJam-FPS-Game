@@ -1,71 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using GameJam.Player;
-using System;
 using Random = UnityEngine.Random;
 
 namespace GameJam.PlayerCombat
 {
-    public class RangeSpellSkill : MonoBehaviour
+    public class RangeSpellSkill : BaseSkill
     {
         [SerializeField] private GameObject[] _projectTiles;
+        [SerializeField] private Transform[] _spawnPoint;    
         [SerializeField] private PlayerSettings _playerSettings;
-        [SerializeField] private ChargeSkill _charge;
         [SerializeField] private Camera _cam;
-        [SerializeField] private GameObject _fireShield;
-        [SerializeField] private Transform _LHFirePoint, _RHFirePoint, _MHFirePoint;        
-        
-        private Animator _animator;
+          
         private Vector3 _destination;      
         private bool _leftHand;
         private float _timeToFire;
 
-        public static event Action <bool> SetDamage;
-
-        private void Awake()
+        protected override void OnEnable()
         {
-			_animator = GetComponent<Animator>();
-
-		}
-
-        private void Start() => _charge.DisableShield(_fireShield);    
-        
-        #region Input
-        private void Update()
-        {
-            if (Input.GetButtonDown("Fire1") && (Time.time >= _timeToFire) && !_animator.GetBool("shield")) 
-            {
-                _animator.SetBool("attack", true);            
-                ShootProjectTile();
-                _charge.EnableProjectile();
-            }
-
-            else if (Input.GetButtonUp("Fire1"))
-            {
-                _animator.SetBool("attack", false);
-            }
-
-            if (Input.GetButton("Fire2"))
-            {
-                _animator.SetBool("shield", true);
-                _charge.EnableShield(_fireShield);
-                SetDamage?.Invoke(_charge.canDefense);
-            }
-
-            else if (Input.GetButtonUp("Fire2"))
-            {            
-                _animator.SetBool("shield", false);
-                _charge.DisableShield(_fireShield);
-                SetDamage?.Invoke(_charge.canDefense);
-            }
+            base.OnEnable();
+            _inputReader.AttackEvent += ShootProjectTile;
         }
-        #endregion
 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            _inputReader.AttackEvent -= ShootProjectTile;
+        }
 
-        #region Projectile
-
-        private void RayMethod()
+        private void CreateRay()
         {
             Ray ray = _cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hit;
@@ -83,36 +44,42 @@ namespace GameJam.PlayerCombat
 
         private void ShootProjectTile()
         {
-            RayMethod();
+            CreateRay();
 
-            if (_leftHand)
+            if (Time.time >= _timeToFire)
             {
-                _leftHand = false;
-                InstantiateProjectTile(_LHFirePoint);
-            }
+				if (_leftHand)
+				{
+					_leftHand = false;
+					InstantiateProjectTile(_spawnPoint[0]);
+				}
 
-            else
-            {
-                _leftHand = true;
-                InstantiateProjectTile(_RHFirePoint);
-            }
-        }        
+				else
+				{
+					_leftHand = true;
+					InstantiateProjectTile(_spawnPoint[1]);
+				}
+			}            
+        }		
 
-        private void InstantiateProjectTile(Transform firePoint)
+		private void InstantiateProjectTile(Transform firePoint)
         {
-            if (_playerSettings.Charge > 0)
+            if (_playerSettings.Mana > 0)
             {
                 _timeToFire = Time.time + 1 / _playerSettings.FireRate;
-
-                // Random sayý alýr.
                 var randomProjectile = Random.Range(0, _projectTiles.Length);
                 var projectileObj = Instantiate(_projectTiles[randomProjectile], firePoint.position, Quaternion.identity);
                 projectileObj.GetComponent<Rigidbody>().velocity = (_destination - firePoint.position).normalized * _playerSettings.ProjectileSpeed;
                 iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-_playerSettings.ArcRange, _playerSettings.ArcRange),
                 Random.Range(-_playerSettings.ArcRange, _playerSettings.ArcRange), 0), Random.Range(0.5f, 2));
-                            
-            }            
+				ReduceProjectileMana();
+			}            
         }
-        #endregion      
-    }
+		public void ReduceProjectileMana()
+		{
+			_playerSettings.Mana -= _playerSettings.ProjectileAmount;
+			if (_playerSettings.Mana <= 0)
+				_playerSettings.Mana = 0;
+		}
+	}
 }

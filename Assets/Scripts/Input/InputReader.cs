@@ -13,6 +13,8 @@ public class InputReader : DescriptionBaseSO
 	public event UnityAction JumpCanceledEvent = delegate { };
 	public event UnityAction AttackEvent = delegate { };
 	public event UnityAction AttackCanceledEvent = delegate { };
+	public event UnityAction DefenceEvent = delegate { };
+	public event UnityAction DefenceCanceledEvent = delegate { };
 	public event UnityAction InteractEvent = delegate { }; // Used to talk, pickup objects, interact with tools like the cooking cauldron
 	public event UnityAction InventoryActionButtonEvent = delegate { };
 	public event UnityAction SaveActionButtonEvent = delegate { };
@@ -33,6 +35,19 @@ public class InputReader : DescriptionBaseSO
 				break;
 			case InputActionPhase.Canceled:
 				AttackCanceledEvent.Invoke();
+				break;
+		}
+	}
+
+	public void OnDefence(InputAction.CallbackContext context)
+	{
+		switch (context.phase)
+		{
+			case InputActionPhase.Performed:
+				DefenceEvent.Invoke();
+				break;
+			case InputActionPhase.Canceled:
+				DefenceCanceledEvent.Invoke();
 				break;
 		}
 	}

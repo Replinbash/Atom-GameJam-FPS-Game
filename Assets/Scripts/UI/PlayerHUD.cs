@@ -1,17 +1,17 @@
+using GameJam.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHUD : MonoBehaviour
 {
-    [SerializeField] private ProgressBar _chargeBar, _healthBar, _staminaBar;
+	[SerializeField] private ProgressBar _manaBar, _healthBar, _staminaBar;
+	[SerializeField] private PlayerSettings _playerSettings;
 
-    public void UptadeHealth(int currentHealth, int maxHealth) => _healthBar.SetValues(currentHealth, maxHealth);
-
-    public void UptadeCharge(int currentCharge, int maxCharge) => _chargeBar.SetValues(currentCharge, maxCharge);
-
-    public void UptadeStamina(int currentStamina, int maxStamina) => _staminaBar.SetValues(currentStamina, maxStamina);
+	private void Update()
+	{
+		_staminaBar.SetValues((int)_playerSettings.Stamina, (int)_playerSettings.MaxStamina);
+		_manaBar.SetValues((int)_playerSettings.Mana, (int)_playerSettings.MaxMana);
+		_healthBar.SetValues(_playerSettings.Health, _playerSettings.MaxHealth);
+	}
 }
-
-
-

@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 355328595}
   - component: {fileID: 355328594}
   m_Layer: 5
-  m_Name: ChargeFill
+  m_Name: ManaFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -700,9 +700,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9479e5c196dfa445b154496c1431816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chargeBar: {fileID: 626904302}
+  _manaBar: {fileID: 626904302}
   _healthBar: {fileID: 371143530}
   _staminaBar: {fileID: 1206874910}
+  _playerSettings: {fileID: 11400000, guid: 723f20a6f1dc7704abedff90ba4c6fdb, type: 2}
 --- !u!1 &469429238
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,10 +982,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 106908623, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
-      propertyPath: _hud
-      value: 
-      objectReference: {fileID: 450012961}
     - target: {fileID: 865341174851940693, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1048,7 +1045,7 @@ GameObject:
   - component: {fileID: 626904303}
   - component: {fileID: 626904302}
   m_Layer: 5
-  m_Name: ChargeBar
+  m_Name: ManaBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1679,7 +1676,7 @@ GameObject:
   - component: {fileID: 1724000057}
   - component: {fileID: 1724000056}
   m_Layer: 5
-  m_Name: ChargeAmount
+  m_Name: ManaAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

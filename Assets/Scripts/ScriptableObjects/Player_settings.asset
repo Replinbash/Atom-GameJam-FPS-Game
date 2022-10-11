@@ -18,7 +18,8 @@ MonoBehaviour:
   Gravity: -20
   JumpHeight: 0.5
   MouseSensitivity: 150
-  MaxHealth: 100
+  Health: 22
+  MaxHealth: 75
   Stamina: 50
   MaxStamina: 50
   StaminaAmount: 10
@@ -28,5 +29,5 @@ MonoBehaviour:
   ArcRange: 2
   ProjectileAmount: 10
   ShieldAmount: 3.25
-  Charge: 50
-  MaxCharge: 50
+  Mana: 50
+  MaxMana: 50
