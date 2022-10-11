@@ -13,7 +13,7 @@ namespace GameJam.Enemies
         private void Start()
         {
             InitVariables();
-            PlayerCombat.MagicSkills.SetDamage += FreezeDamage;
+            PlayerCombat.RangeSpellSkill.SetDamage += FreezeDamage;
         }
 
         // DealDamage: Hasar vermek.
@@ -35,7 +35,7 @@ namespace GameJam.Enemies
         {
             base.Die();
             GetComponent<Animator>().SetTrigger("die");
-            GetComponent<EnemyController>().enabled = false;
+            GetComponent<EnemyBaseAttack>().enabled = false;
             Destroy(gameObject, 3);
         }
 

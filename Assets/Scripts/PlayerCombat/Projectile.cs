@@ -5,9 +5,9 @@ using GameJam.Player;
 
 namespace GameJam.PlayerCombat
 {
-    public class ProjectTile : MonoBehaviour
+    public class Projectile : MonoBehaviour
     {
-        [SerializeField] private CharacterControllerSettings _playerSettings;
+        [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private GameObject impactVFX;
         private bool _collided;
 

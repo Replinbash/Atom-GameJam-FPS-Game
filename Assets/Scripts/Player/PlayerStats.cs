@@ -6,7 +6,7 @@ namespace GameJam.Player
 {
     public class PlayerStats : CharacterStats
     {
-        [SerializeField] private CharacterControllerSettings _playerSettings;
+        [SerializeField] private PlayerSettings _playerSettings;
         [SerializeField] private PlayerHUD _hud;
 
         private int _chargeRate;
@@ -50,7 +50,7 @@ namespace GameJam.Player
         {
             yield return new WaitForSeconds(wait);
 
-            while (true)
+            while (_playerSettings.Charge < _playerSettings.MaxCharge)
             {
                 _playerSettings.Charge += _playerSettings.MaxCharge / _chargeRate;
 
@@ -76,7 +76,7 @@ namespace GameJam.Player
         {
             yield return new WaitForSeconds(wait);
 
-            while (true)
+            while (_playerSettings.Stamina < _playerSettings.MaxStamina)
             {
                 _playerSettings.Stamina += _playerSettings.MaxStamina / _chargeRate;
 

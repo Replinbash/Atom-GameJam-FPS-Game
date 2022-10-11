@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameJam.Enemies
 {
-    [CreateAssetMenu(menuName = "EnemyController")]
+    [CreateAssetMenu(fileName ="Enemy", menuName = "EnemyController")]
     public class EnemyControllerSettings : ScriptableObject
     {
         [Header("Health Settings")]

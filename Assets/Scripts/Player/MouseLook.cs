@@ -7,7 +7,7 @@ namespace GameJam.Player
     public class MouseLook : MonoBehaviour
     {        
         [SerializeField] private Transform _playerBody;
-        [SerializeField] private CharacterControllerSettings _settings;
+        [SerializeField] private PlayerSettings _settings;
 
         private float _xRotation = 0f;
 

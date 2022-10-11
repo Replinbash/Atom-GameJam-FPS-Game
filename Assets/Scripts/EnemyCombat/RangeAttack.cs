@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace GameJam.Enemies
 {
-    public class RangeAttack : EnemyController
-    {
+    public class RangeAttack : EnemyBaseAttack
+	{
         [SerializeField] private Queue<GameObject> pooledObjects; // object pooling queue
         [SerializeField] private GameObject _arrowPrefab;
         [SerializeField] private Transform _arrowTransform;
@@ -16,8 +16,9 @@ namespace GameJam.Enemies
         private Transform _poolHolderTrans;
         private float _timeToFire;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             CombatBehaviour += AttackSequence;           
 
             _poolHolder = new GameObject(transform.name + " Arrow Pool");

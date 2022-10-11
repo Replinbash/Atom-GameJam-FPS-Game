@@ -7,11 +7,11 @@ using Random = UnityEngine.Random;
 
 namespace GameJam.PlayerCombat
 {
-    public class MagicSkills : MonoBehaviour
+    public class RangeSpellSkill : MonoBehaviour
     {
         [SerializeField] private GameObject[] _projectTiles;
-        [SerializeField] private CharacterControllerSettings _playerSettings;
-        [SerializeField] private ChargeManager _chargeManager;
+        [SerializeField] private PlayerSettings _playerSettings;
+        [SerializeField] private ChargeSkill _charge;
         [SerializeField] private Camera _cam;
         [SerializeField] private GameObject _fireShield;
         [SerializeField] private Transform _LHFirePoint, _RHFirePoint, _MHFirePoint;        
@@ -29,7 +29,7 @@ namespace GameJam.PlayerCombat
 
 		}
 
-        private void Start() => _chargeManager.DisableShield(_fireShield);    
+        private void Start() => _charge.DisableShield(_fireShield);    
         
         #region Input
         private void Update()
@@ -38,7 +38,7 @@ namespace GameJam.PlayerCombat
             {
                 _animator.SetBool("attack", true);            
                 ShootProjectTile();
-                _chargeManager.EnableProjectile();
+                _charge.EnableProjectile();
             }
 
             else if (Input.GetButtonUp("Fire1"))
@@ -49,15 +49,15 @@ namespace GameJam.PlayerCombat
             if (Input.GetButton("Fire2"))
             {
                 _animator.SetBool("shield", true);
-                _chargeManager.EnableShield(_fireShield);
-                SetDamage?.Invoke(_chargeManager.canDefense);
+                _charge.EnableShield(_fireShield);
+                SetDamage?.Invoke(_charge.canDefense);
             }
 
             else if (Input.GetButtonUp("Fire2"))
             {            
                 _animator.SetBool("shield", false);
-                _chargeManager.DisableShield(_fireShield);
-                SetDamage?.Invoke(_chargeManager.canDefense);
+                _charge.DisableShield(_fireShield);
+                SetDamage?.Invoke(_charge.canDefense);
             }
         }
         #endregion

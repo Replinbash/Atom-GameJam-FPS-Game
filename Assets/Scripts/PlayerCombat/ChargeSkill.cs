@@ -5,22 +5,43 @@ using GameJam.Player;
 
 namespace GameJam.PlayerCombat
 {
-    public class ChargeManager : MonoSingleton<ChargeManager>
+    public class ChargeSkill : MonoBehaviour
     {
-        [SerializeField] private CharacterControllerSettings _playerSettings;
-        [HideInInspector] public bool canDefense;
+        [SerializeField] private PlayerSettings _playerSettings;
+		[SerializeField] private InputReader _inputReader;
+		[HideInInspector] public bool canDefense;
         
         private PlayerStats _playerStats;
-        private bool _canRun;
+        private bool _isRunning;
         private float _speed;
 
         private void Awake()
         {
 			_playerStats = GetComponent<PlayerStats>();
 		}
+
+        private void OnEnable()
+        {
+            _inputReader.StartedRunning += HandleRunning;
+			_inputReader.StoppedRunning += StopRunning;
+
+		}
+
+        private void OnDisable()
+        {
+			_inputReader.StartedRunning -= HandleRunning;
+			_inputReader.StoppedRunning -= StopRunning;
+		}
+
         private void Start()
         {           
             _speed = _playerSettings.CurrentSpeed;
+        }
+
+        private void Update()
+        {
+            if (_isRunning)
+                HandleRunning();
         }
 
         #region Projectile
@@ -61,29 +82,31 @@ namespace GameJam.PlayerCombat
         #endregion
 
         #region Stamina
-        public void EnableStamina()
+        public void HandleRunning()
         {
             if (_playerSettings.Stamina > 0)
             {
-                _canRun = true;
-                _playerSettings.Stamina -= _playerSettings.StaminaAmount * Time.deltaTime;
+                _isRunning = true;               
 
-                if (_canRun)
+                if (_isRunning)
                 {
-                    _playerSettings.CurrentSpeed = Mathf.MoveTowards(_playerSettings.CurrentSpeed, 
+					_playerSettings.Stamina -= _playerSettings.StaminaAmount * Time.deltaTime;
+					_playerSettings.CurrentSpeed = Mathf.MoveTowards(_playerSettings.CurrentSpeed, 
                     _playerSettings.MaxSpeed, _playerSettings.AccelerationSpeed * Time.deltaTime);                                       
                 }
-                
-                if (_playerSettings.Stamina <= 0 || !_canRun) 
-                    DisableRun();             
-            }
 
+                if (_playerSettings.Stamina <= 0 || !_isRunning)
+                {
+					_playerSettings.Stamina = 0;
+					StopRunning();
+				}                              
+            }
             StaminaSystem();
         }
 
-        public void DisableRun()
+        public void StopRunning()
         {
-            _canRun = false;
+            _isRunning = false;
             _playerSettings.CurrentSpeed = _speed;
             StaminaSystem();
         }
@@ -107,6 +130,8 @@ namespace GameJam.PlayerCombat
                 _playerStats.StaminaControl(false);
         }
         #endregion
+
+
     }
 }
 

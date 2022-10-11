@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameJam.Player
 {
-    [CreateAssetMenu(menuName = "PlayerController")]
-    public class CharacterControllerSettings : ScriptableObject
+    [CreateAssetMenu(fileName = "Player", menuName = "PlayerController")]
+    public class PlayerSettings : ScriptableObject
     {
         [Header("Character Settings")]
         public float CurrentSpeed;

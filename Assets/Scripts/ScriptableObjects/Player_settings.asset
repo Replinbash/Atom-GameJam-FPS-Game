@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 914565bb58ec44346afcb70d66bce262, type: 3}
-  m_Name: PlayerController_settings
+  m_Name: Player_settings
   m_EditorClassIdentifier: 
   CurrentSpeed: 10
   MaxSpeed: 20
   AccelerationSpeed: 10
-  Gravity: -30
+  Gravity: -20
   JumpHeight: 0.5
   MouseSensitivity: 150
   MaxHealth: 100

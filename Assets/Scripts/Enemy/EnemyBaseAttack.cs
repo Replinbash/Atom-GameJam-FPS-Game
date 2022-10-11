@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace GameJam.Enemies
 {
-    public abstract class EnemyController : MonoBehaviour
+    public abstract class EnemyBaseAttack : MonoBehaviour
     {
 		[SerializeField] protected Transform[] _weaponTransform;
 		[SerializeField] protected GameObject[] _weaponPrefab;
@@ -33,7 +33,7 @@ namespace GameJam.Enemies
             _playerStats = _player.GetComponent<CharacterStats>();            
         }
 
-        private void OnEnable()
+        protected virtual void Start()
         {
 			SpawnWeapon();
 		}

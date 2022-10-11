@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using GameJam.PlayerCombat;
 using UnityEngine.InputSystem;
@@ -9,29 +6,40 @@ namespace GameJam.Player
 {
 	public class PlayerMovementController : MonoBehaviour
 	{
-		[SerializeField] private CharacterControllerSettings _playerSettings;
-		[SerializeField] private ChargeManager _chargeManager;
+		[SerializeField] private PlayerSettings _playerSettings;
+		[SerializeField] private InputReader _inputReader;
 		[SerializeField] private Transform _groundCheck;
 		[SerializeField] private LayerMask _groundMask;
 
 		private CharacterController _characterController;
 
 		private Vector3 _jumpVelocity;
-		private float _groundDistance = 0.4f;
+		private float _groundDistance = 0.2f;
 		private bool _isGrounded;
-		private Vector3 _movement;
 
 		private void Awake()
 		{
 			_characterController = GetComponent<CharacterController>();
 		}
 
+		private void OnEnable()
+		{
+			_inputReader.JumpEvent += OnJump;
+		}
+
+		private void OnDisable()
+		{
+			_inputReader.JumpEvent -= OnJump;
+		}
+
 		void Update()
 		{
-			PlayerRunning();
+			Gravity();
+			Move();
+		}
 
-			#region Gravity
-
+		private void Gravity()
+		{
 			_isGrounded = Physics.CheckSphere(_groundCheck.position, _groundDistance, _groundMask);
 
 			if (_isGrounded && _jumpVelocity.y < 0)
@@ -42,41 +50,18 @@ namespace GameJam.Player
 			_jumpVelocity.y += _playerSettings.Gravity * Time.deltaTime;
 
 			_characterController.Move(_jumpVelocity * Time.deltaTime);
-
-			#endregion
-
-			#region Movement
-
-
-			//float x = Input.GetAxis("Horizontal");
-			//float z = Input.GetAxis("Vertical");
-			//Vector3 move = transform.right * x + transform.forward * z;
-
-			_characterController.Move(_movement * _playerSettings.CurrentSpeed * Time.deltaTime);
-
-			#endregion
 		}
 
-		private void PlayerRunning()
+		private void Move()
 		{
-			if (Input.GetKey(KeyCode.LeftShift))
-			{
-				_chargeManager.EnableStamina();
-			}
+			float x = Input.GetAxis("Horizontal");
+			float z = Input.GetAxis("Vertical");
+			Vector3 move = transform.right * x + transform.forward * z;
 
-			else if (Input.GetKeyUp(KeyCode.LeftShift))
-			{
-				_chargeManager.DisableRun();
-			}
+			_characterController.Move(move * _playerSettings.CurrentSpeed * Time.deltaTime);
 		}
 
-		public void OnMovement(InputAction.CallbackContext movementInput)
-		{
-			Vector3 input = movementInput.ReadValue<Vector3>();
-			_movement = transform.right * input.x + transform.forward * input.z;
-		}
-
-		public void OnJump(InputAction.CallbackContext jumpInput)
+		public void OnJump()
 		{
 			if (_isGrounded)
 				_jumpVelocity.y += Mathf.Sqrt(_playerSettings.JumpHeight * -3.0f * _playerSettings.Gravity);

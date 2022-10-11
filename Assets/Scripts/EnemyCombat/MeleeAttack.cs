@@ -5,10 +5,11 @@ using GameJam.Core;
 
 namespace GameJam.Enemies
 {
-    public class MeleeAttack : EnemyController
+    public class MeleeAttack : EnemyBaseAttack
     {
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             CombatBehaviour += AttackSequence;
         }
 
