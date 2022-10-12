@@ -11,7 +11,6 @@ namespace GameJam.PlayerCombat
 		protected Coroutine _reloadStamina = null;
 		protected Coroutine _reloadMana = null;
 
-
 		private void Start()
 		{
 			_playerSettings.Mana = _playerSettings.MaxMana;

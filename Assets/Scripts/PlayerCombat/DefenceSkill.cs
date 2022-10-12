@@ -30,7 +30,6 @@ namespace GameJam.PlayerCombat
 		private void Update()
 		{
 			EnableShield();
-			Debug.Log("Can Defense: " + _canDefense);
 		}
 
 		public void Defending() => _canDefense = true;

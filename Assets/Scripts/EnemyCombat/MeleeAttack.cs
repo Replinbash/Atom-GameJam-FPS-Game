@@ -27,14 +27,18 @@ namespace GameJam.Enemies
                 _timeOfLastAttack = Time.time;
                 _canAttack = true;
 
-                if (_animation != null) _animation.SetTrigger("meleeAttack");                
-                Debug.Log("Melee Attack Yaptý");
+                if (_animation != null)
+                {
+                    _animation.SetTrigger("meleeAttack");              
+                }
+
+                Debug.Log("Melee has attacked!");
             }
         }
 
         public void AttackEvent()
         {
-            Debug.Log("event calisti");
+            Debug.Log("Enemy Melee Attack Event is work!");
             _enemyStats.DealDamage(_playerStats);
         }
     }

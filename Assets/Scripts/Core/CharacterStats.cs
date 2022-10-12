@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    protected int health;
-    protected int maxHealth;
-    protected bool isDead;
+    protected internal int health;
+    protected internal int maxHealth;
+    protected internal bool isDead;
 
     private void Start()
     {
@@ -57,7 +55,7 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void InitVariables()
     {
-        maxHealth = 100;
+        maxHealth = 100; // default value
         SetHealthTo(maxHealth);
         isDead = false;
     }

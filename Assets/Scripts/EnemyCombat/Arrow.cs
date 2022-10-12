@@ -5,7 +5,7 @@ using GameJam.Enemies;
 
 public class Arrow : MonoBehaviour
 {
-    [SerializeField] private EnemyControllerSettings _controllerSettings;
+    [SerializeField] private EnemyControllerSettings _enemySettings;
     [SerializeField] private CharacterStats _playerStats = null;
     
     [HideInInspector] public RangeAttack _rangeAttack = null;
@@ -28,7 +28,7 @@ public class Arrow : MonoBehaviour
     private void Update()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * _controllerSettings.LaunchSpeed * 1500);
+        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * _enemySettings.LaunchSpeed * 1500);
         if (transform.parent != null)
         {
             currentTime += Time.deltaTime;
@@ -56,7 +56,11 @@ public class Arrow : MonoBehaviour
         {
             // CharacterStats _playerstats = collision.transform.GetComponent<CharacterStats>();
 
-            if (_playerStats != null) _playerStats.TakeDamage(_controllerSettings.Damage);        
+            if (_playerStats != null)
+            {
+                _playerStats.TakeDamage(_enemySettings.Damage);      
+
+            }
         }
     }
 }

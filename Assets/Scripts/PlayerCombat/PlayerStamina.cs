@@ -29,7 +29,6 @@ namespace GameJam.PlayerCombat
 		protected IEnumerator ReloadStamina(int wait)
 		{
 			yield return new WaitForSeconds(wait);
-			Debug.Log("Stamina");
 
 			while (_playerSettings.Stamina < _playerSettings.MaxStamina)
 			{

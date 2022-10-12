@@ -20,6 +20,10 @@ public class PlayerSettings : ScriptableObject
 	public float MaxStamina;
 	public float StaminaAmount;
 
+	[Header("Mana Settings")]
+	public float Mana;
+	public float MaxMana;
+
 	[Header("Projectile Settings")]
 	public int Damage;
 	public float ProjectileSpeed;
@@ -30,8 +34,6 @@ public class PlayerSettings : ScriptableObject
 	[Header("Defence Settings")]
 	public float ShieldAmount;
 
-	[Header("Mana Settings")]
-	public float Mana;
-	public float MaxMana;
+	
 }
 

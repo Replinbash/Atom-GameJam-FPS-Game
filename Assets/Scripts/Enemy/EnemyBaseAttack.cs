@@ -97,7 +97,8 @@ namespace GameJam.Enemies
             }
 
             // Enemy saldýrýya geciyor
-            else if (_hasStopped) _hasStopped = false;
+            else if (_hasStopped) 
+                _hasStopped = false;
 
         }
 

@@ -35,7 +35,6 @@ namespace GameJam.PlayerCombat
 		protected IEnumerator ReloadMana(int wait)
 		{
 			yield return new WaitForSeconds(wait);
-			Debug.Log("Mana");
 
 			while (_playerSettings.Mana < _playerSettings.MaxMana)
 			{

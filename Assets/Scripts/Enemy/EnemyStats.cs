@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameJam.Enemies
@@ -11,12 +9,12 @@ namespace GameJam.Enemies
 
 		private void OnEnable()
 		{
-			PlayerCombat.DefenceSkill.DefenceActivatedEvent += FreezeDamage;
+			PlayerCombat.DefenceSkill.DefenceActivatedEvent += AbsorveDamage;
 		}
 
 		private void OnDisable()
 		{
-			PlayerCombat.DefenceSkill.DefenceActivatedEvent -= FreezeDamage;
+			PlayerCombat.DefenceSkill.DefenceActivatedEvent -= AbsorveDamage;
 		}
 
 		private void Start()
@@ -50,10 +48,11 @@ namespace GameJam.Enemies
             base.Die();
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<EnemyBaseAttack>().enabled = false;
-            Destroy(gameObject, 3);
+			GetComponent<CapsuleCollider>().enabled = false;
+			Destroy(gameObject, 3);
         }       
 
-        private void FreezeDamage(bool isDefense)
+        private void AbsorveDamage(bool isDefense)
         {
             _enemySettings.Damage = isDefense ? _enemySettings.Damage = 0 : _enemySettings.Damage = _initialDamage;            
         }

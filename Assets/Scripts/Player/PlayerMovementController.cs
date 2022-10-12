@@ -95,6 +95,7 @@ namespace GameJam.Player
 				if (_playerSettings.Stamina <= 0)
 				{
 					_playerSettings.Stamina = 0;
+					_playerSettings.CurrentSpeed = playerSpeed;
 				}
 			}
 

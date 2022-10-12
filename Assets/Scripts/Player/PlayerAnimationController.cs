@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAnimationController : MonoBehaviour
@@ -18,7 +16,6 @@ public class PlayerAnimationController : MonoBehaviour
 		_inputReader.DefenceEvent += PlayDefenceAnim;
 		_inputReader.AttackCanceledEvent += StopSpellAnim;
 		_inputReader.DefenceCanceledEvent += StopDefenceAnim;
-
 	}
 
 	private void OnDisable()

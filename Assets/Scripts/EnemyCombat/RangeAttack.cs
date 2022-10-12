@@ -4,106 +4,109 @@ using UnityEngine;
 
 namespace GameJam.Enemies
 {
-    public class RangeAttack : EnemyBaseAttack
+	public class RangeAttack : EnemyBaseAttack
 	{
-        [SerializeField] private Queue<GameObject> pooledObjects; // object pooling queue
-        [SerializeField] private GameObject _arrowPrefab;
-        [SerializeField] private Transform _arrowTransform;
-        [SerializeField] private int _poolSize;
+		[SerializeField] private Queue<GameObject> pooledObjects;
+		[SerializeField] private GameObject _arrowPrefab;
+		[SerializeField] private Transform _arrowTransform;
+		[SerializeField] private int _poolSize;
 
-        private Arrow _arrowScript;
-        private GameObject _poolHolder;
-        private Transform _poolHolderTrans;
-        private float _timeToFire;
+		private Arrow _arrowScript;
+		private GameObject _poolHolder;
+		private Transform _poolHolderTrans;
+		private float _timeToFire;
 
-        protected override void Start()
-        {
-            base.Start();
-            CombatBehaviour += AttackSequence;           
+		protected override void Start()
+		{
+			base.Start();
+			CombatBehaviour += AttackSequence;
 
-            _poolHolder = new GameObject(transform.name + " Arrow Pool");
-            _poolHolderTrans = _poolHolder.gameObject.transform;
+			_poolHolder = new GameObject(transform.name + " Arrow Pool");
+			_poolHolderTrans = _poolHolder.gameObject.transform;
 
-            CreatePool();
-        }
+			CreatePool();
+		}
 
-        protected override void AttackSequence()
-        {
-            //player durursa
-            if (!_hasStopped)
-            {
-                _hasStopped = true;
-                _timeOfLastAttack = Time.time - 1.5f;
-            }
+		protected override void AttackSequence()
+		{
+			//player durursa
+			if (!_hasStopped)
+			{
+				_hasStopped = true;
+				_timeOfLastAttack = Time.time - 1.5f;
+			}
 
-            else if (Time.time >= _timeOfLastAttack + _enemySettings.AttackSpeed)
-            {
-                _timeOfLastAttack = Time.time;
-                _canAttack = true;
+			else if (Time.time >= _timeOfLastAttack + _enemySettings.AttackSpeed)
+			{
+				_timeOfLastAttack = Time.time;
+				_canAttack = true;
 
-                if (_animation != null) _animation.SetTrigger("rangeAttack");
+				if (_animation != null)
+				{
+					_animation.SetTrigger("rangeAttack");
+				}
 
-                if (Time.time >= _timeToFire)
-                {
-                    Debug.Log("Bowcu Attack Yaptý");
-                    StartCoroutine(GetArrow(1));
-                }
-            }
-        }
+				if (Time.time >= _timeToFire)
+				{
+					Debug.Log("Bowcu Attack Yaptý");
+					StartCoroutine(GetArrow(1));
+				}
+			}
+		}
 
-        #region Pooling
+		#region Pooling
 
-        public IEnumerator GetArrow(int waitTime)
-        {
-            yield return new WaitForSeconds(waitTime);
-            GetPooledObject(_arrowTransform.position, _player.transform.position + Vector3.up * 2.60f);
-        }           
+		public IEnumerator GetArrow(int waitTime)
+		{
+			yield return new WaitForSeconds(waitTime);
+			GetPooledObject(_arrowTransform.position, _player.transform.position + Vector3.up * 2.60f);
+		}
 
-        public void CreatePool()
-        {
-            pooledObjects = new Queue<GameObject>();
+		public void CreatePool()
+		{
+			pooledObjects = new Queue<GameObject>();
 
-            for (int i = 0; i < _poolSize; i++)
-            {
-                GameObject _obj = Instantiate(_arrowPrefab, _poolHolderTrans); //Obje oluþtur
-                _arrowScript = _obj.GetComponent<Arrow>();
-                _arrowScript._rangeAttack = this;
-                _arrowScript._arrowTransformParent = _poolHolderTrans;
-                
-                _obj.SetActive(false); //Objeyi kapat
-                pooledObjects.Enqueue(_obj); //Objeyi listeye ekle               
-            }
-        }
+			for (int i = 0; i < _poolSize; i++)
+			{
+				GameObject _obj = Instantiate(_arrowPrefab, _poolHolderTrans); //Obje oluþtur
+				_arrowScript = _obj.GetComponent<Arrow>();
+				_arrowScript._rangeAttack = this;
+				_arrowScript._arrowTransformParent = _poolHolderTrans;
 
-        public void AddExtraArrowPool()
-        {
-            GameObject _obj = Instantiate(_arrowPrefab); //Obje oluþtur
-            _obj.transform.parent = _poolHolderTrans; // Objeleri boþ bir objenin altýna toplar.
-            _obj.SetActive(false); //Objeyi kapat
-            pooledObjects.Enqueue(_obj); //Objeyi listeye ekle
-            _poolSize++; //Objeyi çoðalt
-        }
+				_obj.SetActive(false); //Objeyi kapat
+				pooledObjects.Enqueue(_obj); //Objeyi listeye ekle               
+			}
+		}
 
-        public GameObject GetPooledObject(Vector3 position, Vector3 direction)
-        {
-            // If the queue is empty
-            if (pooledObjects.Count == 0)
-            {
-                AddExtraArrowPool();
-            }
+		public void AddExtraArrowPool()
+		{
+			GameObject _obj = Instantiate(_arrowPrefab); //Obje oluþtur
+			_obj.transform.parent = _poolHolderTrans; // Objeleri boþ bir objenin altýna toplar.
+			_obj.SetActive(false); //Objeyi kapat
+			pooledObjects.Enqueue(_obj); //Objeyi listeye ekle
+			_poolSize++; //Objeyi çoðalt
+		}
 
-            GameObject _obj = pooledObjects.Dequeue(); //Objeyi sýradan çýkarýyoruz
+		public GameObject GetPooledObject(Vector3 position, Vector3 direction)
+		{
+			// If the queue is empty
+			if (pooledObjects.Count == 0)
+			{
+				AddExtraArrowPool();
+			}
 
-            //Pozisyonunu deðiþtirip aktif hale getiriyoruz.
-            _obj.transform.position = position;
-            _obj.transform.LookAt(direction);
-            _obj.SetActive(true);
+			GameObject _obj = pooledObjects.Dequeue(); //Objeyi sýradan çýkarýyoruz
 
-            //Debug.Log("havuzdaki ok sayýsý: " + pooledObjects.Count);
-            return _obj;
-        }
+			//Pozisyonunu deðiþtirip aktif hale getiriyoruz.
+			_obj.transform.position = position;
+			_obj.transform.LookAt(direction);
+			_obj.SetActive(true);
 
-        #endregion
-    }
+			//Debug.Log("havuzdaki ok sayýsý: " + pooledObjects.Count);
+			return _obj;
+		}
+
+		#endregion
+	}
 }
 
