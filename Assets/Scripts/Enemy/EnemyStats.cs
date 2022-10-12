@@ -11,12 +11,12 @@ namespace GameJam.Enemies
 
 		private void OnEnable()
 		{
-			PlayerCombat.DefenceSkill.SetDamage += FreezeDamage;
+			PlayerCombat.DefenceSkill.DefenceActivatedEvent += FreezeDamage;
 		}
 
 		private void OnDisable()
 		{
-			PlayerCombat.DefenceSkill.SetDamage -= FreezeDamage;
+			PlayerCombat.DefenceSkill.DefenceActivatedEvent -= FreezeDamage;
 		}
 
 		private void Start()

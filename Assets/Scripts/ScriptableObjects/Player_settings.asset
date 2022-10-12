@@ -25,9 +25,9 @@ MonoBehaviour:
   StaminaAmount: 10
   Damage: 25
   ProjectileSpeed: 30
-  FireRate: 1.25
+  FireRate: 2
   ArcRange: 2
-  ProjectileAmount: 10
-  ShieldAmount: 3.25
-  Mana: 50
+  ProjectileAmount: 5
+  ShieldAmount: 7
+  Mana: 15
   MaxMana: 50

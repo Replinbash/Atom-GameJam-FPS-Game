@@ -18,12 +18,14 @@ namespace GameJam.PlayerCombat
 		{
 			base.OnEnable();
 			_inputReader.AttackEvent += ShootProjectTile;
+			DefenceSkill.DefenceActivatedEvent += DefenseActive;
 		}
 
 		protected override void OnDisable()
 		{
 			base.OnDisable();
 			_inputReader.AttackEvent -= ShootProjectTile;
+			DefenceSkill.DefenceActivatedEvent -= DefenseActive;
 		}
 
 		private void CreateRay()
@@ -39,6 +41,19 @@ namespace GameJam.PlayerCombat
 			else
 			{
 				_destination = ray.GetPoint(1000);
+			}
+		}
+
+		private void DefenseActive(bool isDefense)
+		{
+			if (isDefense)
+			{
+				_inputReader.AttackEvent -= ShootProjectTile;
+			}
+
+			else
+			{
+				_inputReader.AttackEvent += ShootProjectTile;
 			}
 		}
 

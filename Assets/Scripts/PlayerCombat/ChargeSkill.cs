@@ -6,8 +6,11 @@ namespace GameJam.PlayerCombat
 	{
 		[SerializeField] protected PlayerSettings _playerSettings;
 
-		protected WaitForSeconds _coroutineRange;
 		protected int _chargeRate;
+		protected WaitForSeconds _coroutineRange;
+		protected Coroutine _reloadStamina = null;
+		protected Coroutine _reloadMana = null;
+
 
 		private void Start()
 		{

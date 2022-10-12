@@ -9,18 +9,28 @@ namespace GameJam.PlayerCombat
 		{
 			base.OnEnable();
 			_inputReader.AttackCanceledEvent += StartReloadAttack;
-			_inputReader.DefenceCanceledEvent += StartReload;
+			_inputReader.DefenceCanceledEvent += StartReloadDefence;
+			_inputReader.AttackEvent += StopReload;
+			_inputReader.DefenceEvent += StopReload;
 		}
 
 		protected override void OnDisable()
 		{
 			base.OnDisable();
 			_inputReader.AttackCanceledEvent -= StartReloadAttack;
-			_inputReader.DefenceCanceledEvent -= StartReload;
+			_inputReader.DefenceCanceledEvent -= StartReloadDefence;
+			_inputReader.AttackEvent -= StopReload;
+			_inputReader.DefenceEvent -= StopReload;
 		}
 
-		private void StartReload() => StartCoroutine(ReloadMana(3));
-		private void StartReloadAttack() => StartCoroutine(ReloadMana(6));
+		private void StartReloadDefence() => _reloadMana = StartCoroutine(ReloadMana(3));
+		private void StartReloadAttack() => _reloadMana = StartCoroutine(ReloadMana(3));
+
+		private void StopReload()
+		{
+			if (_reloadMana != null)
+				StopCoroutine(_reloadMana);
+		}
 
 		protected IEnumerator ReloadMana(int wait)
 		{
