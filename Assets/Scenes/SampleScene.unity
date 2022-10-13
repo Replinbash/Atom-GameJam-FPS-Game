@@ -360,6 +360,14 @@ PrefabInstance:
       propertyPath: _arrowPrefab
       value: 
       objectReference: {fileID: 6015331266736071183, guid: 06c3e17063bd07846a8d5477c27ce3ef, type: 3}
+    - target: {fileID: 120559286, guid: 0fae742c69cc58747ae3e9c18a9fe1c1, type: 3}
+      propertyPath: _enemyRangeSO
+      value: 
+      objectReference: {fileID: 11400000, guid: fc7fde6e7523ca742bb7768ca5deb1c0, type: 2}
+    - target: {fileID: 467548468, guid: 0fae742c69cc58747ae3e9c18a9fe1c1, type: 3}
+      propertyPath: _enemySettings
+      value: 
+      objectReference: {fileID: 11400000, guid: fc7fde6e7523ca742bb7768ca5deb1c0, type: 2}
     - target: {fileID: 8016714154528278914, guid: 0fae742c69cc58747ae3e9c18a9fe1c1, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -847,10 +855,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 106908623, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
-      propertyPath: _progressBar
+    - target: {fileID: 857384368, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
+      propertyPath: _spawnPoint.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 857384368, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
+      propertyPath: _projectTiles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646721397, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
+      propertyPath: _bars.Array.data[0]
       value: 
       objectReference: {fileID: 371143530}
+    - target: {fileID: 1646721397, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
+      propertyPath: _bars.Array.data[1]
+      value: 
+      objectReference: {fileID: 1206874910}
+    - target: {fileID: 1646721397, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
+      propertyPath: _bars.Array.data[2]
+      value: 
+      objectReference: {fileID: 626904302}
     - target: {fileID: 865341174851940693, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -899,10 +923,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1796056502870962772, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
-      propertyPath: _inputReader
-      value: 
-      objectReference: {fileID: 11400000, guid: ba966f2198fc94440943c9ef7d315a06, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
 --- !u!1 &626904300
@@ -1383,28 +1403,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206874908}
   m_CullTransparentMesh: 1
---- !u!1 &1646721386 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 865341174851940694, guid: e241d328d0c49c5488b660032d0c6fc3, type: 3}
-  m_PrefabInstance: {fileID: 626114718}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1646721397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1646721386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9479e5c196dfa445b154496c1431816, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerSettings: {fileID: 11400000, guid: 723f20a6f1dc7704abedff90ba4c6fdb, type: 2}
-  _bars:
-  - {fileID: 371143530}
-  - {fileID: 1206874910}
-  - {fileID: 626904302}
 --- !u!1 &1724000054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,6 +1712,14 @@ PrefabInstance:
       propertyPath: _player
       value: 
       objectReference: {fileID: 106908622}
+    - target: {fileID: 770210544, guid: 7013bfd9940c2b0439bc0549d2fdf214, type: 3}
+      propertyPath: _maleeAttackSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 7bf6083a7fc70c74aaff4cab197b4af3, type: 2}
+    - target: {fileID: 1601037351559508, guid: 7013bfd9940c2b0439bc0549d2fdf214, type: 3}
+      propertyPath: _enemySettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 7bf6083a7fc70c74aaff4cab197b4af3, type: 2}
     - target: {fileID: 7927874287241240241, guid: 7013bfd9940c2b0439bc0549d2fdf214, type: 3}
       propertyPath: m_Name
       value: Boss

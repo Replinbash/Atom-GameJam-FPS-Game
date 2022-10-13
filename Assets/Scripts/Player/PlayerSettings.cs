@@ -12,7 +12,6 @@ public class PlayerSettings : ScriptableObject
 	public float MouseSensitivity;
 
 	[Header("Health Settings")]
-	public int Health;
 	public int MaxHealth;
 
 	[Header("Stamina Settings")]

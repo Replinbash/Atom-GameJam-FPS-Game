@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class EnemyState 
+public class EnemyState 
 {
 	public enum STATE
 	{

@@ -1,17 +1,16 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using GameJam.Enemies;
 
-namespace GameJam.Enemies
+namespace GameJam.EnemyCombat
 {
     public abstract class EnemyBaseAttack : MonoBehaviour
     {
 		[SerializeField] protected Transform[] _weaponTransform;
 		[SerializeField] protected GameObject[] _weaponPrefab;
-		[SerializeField] protected Transform _player;
-        [SerializeField] protected EnemyControllerSettings _enemySettings;        
+		[SerializeField] protected Transform _player;        
 
         protected NavMeshAgent _navMesh = null;
         protected Animator _animation = null;
@@ -22,8 +21,6 @@ namespace GameJam.Enemies
         protected bool _startAttack = false;
         protected bool _canAttack = false;
         protected float _timeOfLastAttack = 0;
-
-        public static event Action CombatBehaviour;
 
         private void Awake()
         {           
@@ -68,9 +65,9 @@ namespace GameJam.Enemies
             //transform.LookAt(_player);
         }
 
-        protected abstract void AttackSequence();
+		protected abstract void AttackSequence();
 
-        protected IEnumerator Attack()
+		protected IEnumerator Attack()
         {
             RotateToPlayer();
             var destinationToPlayer = Vector3.Distance(transform.position, _player.position);
@@ -93,14 +90,14 @@ namespace GameJam.Enemies
             if (destinationToPlayer < _navMesh.stoppingDistance)
             {
                 _animation.SetFloat("Speed", 0f);
-                CombatBehaviour?.Invoke();
+                AttackSequence();
             }
 
             // Enemy saldýrýya geciyor
             else if (_hasStopped) 
                 _hasStopped = false;
 
-        }
+        }   
 
         
     }

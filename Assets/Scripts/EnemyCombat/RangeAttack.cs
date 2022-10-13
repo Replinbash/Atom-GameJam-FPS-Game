@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameJam.Enemies
+namespace GameJam.EnemyCombat
 {
 	public class RangeAttack : EnemyBaseAttack
 	{
@@ -10,6 +10,7 @@ namespace GameJam.Enemies
 		[SerializeField] private GameObject _arrowPrefab;
 		[SerializeField] private Transform _arrowTransform;
 		[SerializeField] private int _poolSize;
+		[SerializeField] private EnemyRangeAttackSO _enemyRangeSO;
 
 		private Arrow _arrowScript;
 		private GameObject _poolHolder;
@@ -19,7 +20,6 @@ namespace GameJam.Enemies
 		protected override void Start()
 		{
 			base.Start();
-			CombatBehaviour += AttackSequence;
 
 			_poolHolder = new GameObject(transform.name + " Arrow Pool");
 			_poolHolderTrans = _poolHolder.gameObject.transform;
@@ -36,7 +36,7 @@ namespace GameJam.Enemies
 				_timeOfLastAttack = Time.time - 1.5f;
 			}
 
-			else if (Time.time >= _timeOfLastAttack + _enemySettings.AttackSpeed)
+			else if (Time.time >= _timeOfLastAttack + _enemyRangeSO.AttackSpeed)
 			{
 				_timeOfLastAttack = Time.time;
 				_canAttack = true;

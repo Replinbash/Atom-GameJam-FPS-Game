@@ -10,6 +10,7 @@ namespace GameJam.PlayerCombat
 		[SerializeField] private PlayerSettings _playerSettings;
 		[SerializeField] private Camera _cam;
 
+		private GameObject _holder;
 		private Vector3 _destination;
 		private bool _leftHand;
 		private float _timeToFire;
@@ -26,6 +27,11 @@ namespace GameJam.PlayerCombat
 			base.OnDisable();
 			_inputReader.AttackEvent -= ShootProjectTile;
 			DefenceSkill.DefenceActivatedEvent -= DefenseActive;
+		}
+
+		private void Start()
+		{
+			_holder = new GameObject("Spells Pool");
 		}
 
 		private void CreateRay()
@@ -83,7 +89,7 @@ namespace GameJam.PlayerCombat
 			{
 				_timeToFire = Time.time + 1 / _playerSettings.FireRate;
 				var randomProjectile = Random.Range(0, _projectTiles.Length);
-				var projectileObj = Instantiate(_projectTiles[randomProjectile], firePoint.position, Quaternion.identity);
+				var projectileObj = Instantiate(_projectTiles[randomProjectile], firePoint.position, Quaternion.identity, _holder.transform);
 				projectileObj.GetComponent<Rigidbody>().velocity = (_destination - firePoint.position).normalized * _playerSettings.ProjectileSpeed;
 				iTween.PunchPosition(projectileObj, new Vector3(Random.Range(-_playerSettings.ArcRange, _playerSettings.ArcRange),
 				Random.Range(-_playerSettings.ArcRange, _playerSettings.ArcRange), 0), Random.Range(0.5f, 2));

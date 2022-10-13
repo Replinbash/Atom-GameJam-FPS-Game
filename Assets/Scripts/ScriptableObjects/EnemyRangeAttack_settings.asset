@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37f710dc5f774da4b98ed8f416dae469, type: 3}
-  m_Name: RangeAttack_settings
+  m_Name: EnemyRangeAttack_settings
   m_EditorClassIdentifier: 
-  MaxHealth: 50
-  Damage: 5
-  AttackSpeed: 1.55
-  LaunchSpeed: 1
-  FireRate: 2
+  _maxHealth: 50
+  _damage: 15
+  _attackSpeed: 1.55
   OverrideController: {fileID: 0}
+  _launchSpeed: 1
+  _fireRate: 2

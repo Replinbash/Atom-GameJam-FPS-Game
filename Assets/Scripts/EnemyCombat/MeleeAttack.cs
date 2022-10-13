@@ -1,16 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using GameJam.Core;
 
-namespace GameJam.Enemies
+namespace GameJam.EnemyCombat
 {
     public class MeleeAttack : EnemyBaseAttack
     {
+        [SerializeField] private EnemyMaleeAttackSO _maleeAttackSO;
         protected override void Start()
         {
             base.Start();
-            CombatBehaviour += AttackSequence;
         }
 
         protected override void AttackSequence()
@@ -22,7 +19,7 @@ namespace GameJam.Enemies
                 _timeOfLastAttack = Time.time - 1.5f;
             }
 
-            else if (Time.time >= _timeOfLastAttack + _enemySettings.AttackSpeed)
+            else if (Time.time >= _timeOfLastAttack + _maleeAttackSO.AttackSpeed)
             {
                 _timeOfLastAttack = Time.time;
                 _canAttack = true;

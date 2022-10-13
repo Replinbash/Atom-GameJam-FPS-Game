@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GameJam.Enemies;
+using GameJam.EnemyCombat;
 
 public class Arrow : MonoBehaviour
 {
-    [SerializeField] private EnemyControllerSettings _enemySettings;
-    [SerializeField] private CharacterStats _playerStats = null;
+	[SerializeField] private EnemyRangeAttackSO _enemyRangeSO;
+	[SerializeField] private CharacterStats _playerStats = null;
     
     [HideInInspector] public RangeAttack _rangeAttack = null;
     [HideInInspector] public Transform _arrowTransformParent;
@@ -28,7 +28,7 @@ public class Arrow : MonoBehaviour
     private void Update()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
-        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * _enemySettings.LaunchSpeed * 1500);
+        GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * _enemyRangeSO.LaunchSpeed * 1500);
         if (transform.parent != null)
         {
             currentTime += Time.deltaTime;
@@ -58,7 +58,7 @@ public class Arrow : MonoBehaviour
 
             if (_playerStats != null)
             {
-                _playerStats.TakeDamage(_enemySettings.Damage);      
+                _playerStats.TakeDamage(_enemyRangeSO.Damage);      
 
             }
         }

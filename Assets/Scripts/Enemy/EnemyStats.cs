@@ -1,10 +1,11 @@
 using UnityEngine;
+using GameJam.EnemyCombat;
 
 namespace GameJam.Enemies
 {
     public class EnemyStats : CharacterStats
     {
-        [SerializeField] private EnemyControllerSettings _enemySettings;
+        [SerializeField] private EnemyBaseAttackSO _enemySettings;
         private int _initialDamage;
 
 		private void OnEnable()
