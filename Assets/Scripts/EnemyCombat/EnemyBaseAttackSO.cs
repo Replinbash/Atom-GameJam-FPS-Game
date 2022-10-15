@@ -9,6 +9,10 @@ public class EnemyBaseAttackSO : ScriptableObject
 	[SerializeField] protected int _damage;
 	[SerializeField] protected float _attackSpeed;
 
+	[Header("Weapon Spawn Settings")]
+	public Vector3[] WeaponSpawnPosition;
+	public Quaternion[] WeaponSpawnRotation;
+
 	[Header("Select Weapon")]
 	public AnimatorOverrideController OverrideController;
 

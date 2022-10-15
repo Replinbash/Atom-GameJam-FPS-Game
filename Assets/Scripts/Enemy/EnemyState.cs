@@ -23,7 +23,16 @@ public class EnemyState
 	public STATE state;
 	public EVENT currentEvent;
 	public EnemyState nextState;
+	public EnemyController enemy;
+	public NavMeshAgent agent;
+	public Transform player;
 
+	public void State(EnemyController enemy, Transform player, NavMeshAgent agent)
+	{
+		this.enemy = enemy;
+		this.player = player;
+		this.agent = agent;
+	}
 
 	public EnemyState Process()
 	{

@@ -10,12 +10,14 @@ namespace GameJam.EnemyCombat
     {
 		[SerializeField] protected Transform[] _weaponTransform;
 		[SerializeField] protected GameObject[] _weaponPrefab;
-		[SerializeField] protected Transform _player;        
+		[SerializeField] protected Transform _player;
+		[SerializeField] protected EnemyBaseAttackSO _enemySettings;
 
-        protected NavMeshAgent _navMesh = null;
+		protected NavMeshAgent _navMesh = null;
         protected Animator _animation = null;
         protected EnemyStats _enemyStats = null;
         protected CharacterStats _playerStats = null;
+        protected Coroutine _startAttackProcess;
 
         protected bool _hasStopped = false;
         protected bool _startAttack = false;
@@ -45,7 +47,7 @@ namespace GameJam.EnemyCombat
 
             if (_startAttack)
             {
-                StartCoroutine(Attack());
+				_startAttackProcess = StartCoroutine(Attack());
             }
         }
 
@@ -65,7 +67,7 @@ namespace GameJam.EnemyCombat
             //transform.LookAt(_player);
         }
 
-		protected abstract void AttackSequence();
+		protected abstract void AttackSequence(EnemyBaseAttackSO enemySettings);
 
 		protected IEnumerator Attack()
         {
@@ -90,13 +92,14 @@ namespace GameJam.EnemyCombat
             if (destinationToPlayer < _navMesh.stoppingDistance)
             {
                 _animation.SetFloat("Speed", 0f);
-                AttackSequence();
+                AttackSequence(_enemySettings);
             }
 
             // Enemy saldýrýya geciyor
-            else if (_hasStopped) 
-                _hasStopped = false;
-
+            else
+            {
+				_hasStopped = false;
+			}               
         }   
 
         

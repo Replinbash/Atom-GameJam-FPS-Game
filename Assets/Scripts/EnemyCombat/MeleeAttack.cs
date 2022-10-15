@@ -4,13 +4,12 @@ namespace GameJam.EnemyCombat
 {
     public class MeleeAttack : EnemyBaseAttack
     {
-        [SerializeField] private EnemyMaleeAttackSO _maleeAttackSO;
         protected override void Start()
         {
             base.Start();
         }
 
-        protected override void AttackSequence()
+        protected override void AttackSequence(EnemyBaseAttackSO settings)
         {
             //player durursa
             if (!_hasStopped)
@@ -19,7 +18,7 @@ namespace GameJam.EnemyCombat
                 _timeOfLastAttack = Time.time - 1.5f;
             }
 
-            else if (Time.time >= _timeOfLastAttack + _maleeAttackSO.AttackSpeed)
+            if (Time.time >= _timeOfLastAttack + settings.AttackSpeed)
             {
                 _timeOfLastAttack = Time.time;
                 _canAttack = true;
