@@ -23,9 +23,9 @@ namespace GameJam.EnemyCombat
                 _timeOfLastAttack = Time.time;
                 _canAttack = true;
 
-                if (_animation != null)
+                if (_animator != null)
                 {
-                    _animation.SetTrigger("meleeAttack");              
+                    _animator.SetTrigger("meleeAttack");              
                 }
 
                 Debug.Log("Melee has attacked!");

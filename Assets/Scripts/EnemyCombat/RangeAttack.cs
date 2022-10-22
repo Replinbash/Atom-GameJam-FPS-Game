@@ -6,6 +6,10 @@ namespace GameJam.EnemyCombat
 {
 	public class RangeAttack : EnemyBaseAttack
 	{
+		[SerializeField] private ObjectPool _pool;
+		[SerializeField] private Transform _arrowSpawnPoint;
+		[SerializeField] private GameObject _arrowPrefab;
+
 		protected override void Start()
 		{
 			base.Start();
@@ -25,15 +29,24 @@ namespace GameJam.EnemyCombat
 				_timeOfLastAttack = Time.time;
 				_canAttack = true;
 
-				if (_animation != null)
+				if (_animator != null)
 				{
-					_animation.SetTrigger("rangeAttack");
+					_animator.SetTrigger("rangeAttack");
 				}
 
 				Debug.Log("Bowcu Attack Yaptý");
-				//StartCoroutine(GetArrow(1));
+				StartCoroutine(GetArrow(3));
 			}
 		}
+
+		private IEnumerator GetArrow(int timer)
+		{
+			yield return new WaitForSeconds(timer);	
+			GameObject arrow = _pool.GetObject(_arrowPrefab);
+			arrow.transform.position = _arrowSpawnPoint.position;
+			yield return null;
+		}
+
 	}
 		
 }

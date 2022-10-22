@@ -1,7 +1,7 @@
 using UnityEngine;
 using GameJam.EnemyCombat;
 
-namespace GameJam.Enemies
+namespace GameJam.EnemyCore
 {
     public class EnemyStats : CharacterStats
     {

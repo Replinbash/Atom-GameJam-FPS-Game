@@ -12,4 +12,5 @@ public class EnemyRangeAttackSO : EnemyBaseAttackSO
 	public float LaunchSpeed { get => _launchSpeed; set => _launchSpeed = value; }
 	public float FireRate { get => _fireRate; set => _fireRate = value; }
 
+
 }

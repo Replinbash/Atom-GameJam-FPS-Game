@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EnemyMeleeAttack_settings
   m_EditorClassIdentifier: 
   _maxHealth: 75
+  _attackCooldown: 1
   _damage: 10
   _attackSpeed: 1.5
   WeaponSpawnPosition:

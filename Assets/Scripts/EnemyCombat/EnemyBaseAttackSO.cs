@@ -5,6 +5,9 @@ public class EnemyBaseAttackSO : ScriptableObject
 	[Header("Health Settings")]
 	[SerializeField] protected int _maxHealth;
 
+	[Header("AI Settings")]
+	[SerializeField] protected float _attackCooldown;
+
 	[Header("Attack Settings")]
 	[SerializeField] protected int _damage;
 	[SerializeField] protected float _attackSpeed;
@@ -19,4 +22,5 @@ public class EnemyBaseAttackSO : ScriptableObject
 	public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
 	public int Damage { get => _damage; set => _damage = value; }
 	public float AttackSpeed { get => _attackSpeed; set => _attackSpeed = value; }
+	public float AttackCooldown { get => _attackCooldown; set => _attackCooldown = value; }
 }

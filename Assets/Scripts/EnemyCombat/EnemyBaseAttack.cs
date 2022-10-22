@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using GameJam.Enemies;
+using GameJam.EnemyCore;
 
 namespace GameJam.EnemyCombat
 {
@@ -10,11 +10,11 @@ namespace GameJam.EnemyCombat
     {
 		[SerializeField] protected Transform[] _weaponTransform;
 		[SerializeField] protected GameObject[] _weaponPrefab;
-		[SerializeField] protected Transform _player;
 		[SerializeField] protected EnemyBaseAttackSO _enemySettings;
+		[SerializeField] protected internal Transform Player;
 
 		protected NavMeshAgent _navMesh = null;
-        protected Animator _animation = null;
+        protected Animator _animator = null;
         protected EnemyStats _enemyStats = null;
         protected CharacterStats _playerStats = null;
         protected Coroutine _startAttackProcess;
@@ -24,12 +24,17 @@ namespace GameJam.EnemyCombat
         protected bool _canAttack = false;
         protected float _timeOfLastAttack = 0;
 
-        private void Awake()
+        protected const int RUN_SPEED = 10;
+        protected const int STOPPED_SPEED = 0;
+		protected static int ANIMATOR_PARAM_NPC_SPEED = Animator.StringToHash("Speed");
+
+
+		private void Awake()
         {           
             _navMesh = GetComponent<NavMeshAgent>();
-            _animation = GetComponentInChildren<Animator>();
+            _animator = GetComponentInChildren<Animator>();
             _enemyStats = GetComponent<EnemyStats>();
-            _playerStats = _player.GetComponent<CharacterStats>();            
+            _playerStats = Player.GetComponent<CharacterStats>();            
         }
 
         protected virtual void Start()
@@ -39,16 +44,17 @@ namespace GameJam.EnemyCombat
 
         private void Update()
         {
-
-            if (Input.GetKeyDown(KeyCode.T))
+			if (Input.GetKeyDown(KeyCode.T))
             {
                 _startAttack = true;
             }
 
             if (_startAttack)
             {
-				_startAttackProcess = StartCoroutine(Attack());
+				_startAttackProcess = StartCoroutine(AttackProcess());
             }
+
+			_animator.SetFloat(ANIMATOR_PARAM_NPC_SPEED, _navMesh.velocity.magnitude);
         }
 
         protected void SpawnWeapon()
@@ -61,7 +67,7 @@ namespace GameJam.EnemyCombat
 
         protected void RotateToPlayer()
         {
-            Vector3 direction = _player.position - this.transform.position;
+            Vector3 direction = Player.position - this.transform.position;
             Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = rotation;
             //transform.LookAt(_player);
@@ -69,30 +75,30 @@ namespace GameJam.EnemyCombat
 
 		protected abstract void AttackSequence(EnemyBaseAttackSO enemySettings);
 
-		protected IEnumerator Attack()
+		protected IEnumerator AttackProcess()
         {
             RotateToPlayer();
-            var destinationToPlayer = Vector3.Distance(transform.position, _player.position);
+            var destinationToPlayer = Vector3.Distance(transform.position, Player.position);
 
             // Enemy playera doðru koþuyor.
             if (!_canAttack)
             {
-                _navMesh.SetDestination(_player.position);
-                _animation.SetFloat("Speed", 1f, 0.3f, Time.deltaTime);
-            }  
+                _navMesh.SetDestination(Player.position);
+                _navMesh.speed = RUN_SPEED;
+			}  
 
             // Attack yaptýktan sonra bekleme süresi
             if (destinationToPlayer > _navMesh.stoppingDistance && _canAttack)
             {
-                yield return new WaitForSeconds(0.80f);
+                yield return new WaitForSeconds(_enemySettings.AttackCooldown);
                 _canAttack = false;
             }
 
             // Attack aný.
             if (destinationToPlayer < _navMesh.stoppingDistance)
             {
-                _animation.SetFloat("Speed", 0f);
-                AttackSequence(_enemySettings);
+				_navMesh.speed = STOPPED_SPEED;
+				AttackSequence(_enemySettings);
             }
 
             // Enemy saldýrýya geciyor
@@ -100,9 +106,7 @@ namespace GameJam.EnemyCombat
             {
 				_hasStopped = false;
 			}               
-        }   
-
-        
+        }        
     }
 }
 

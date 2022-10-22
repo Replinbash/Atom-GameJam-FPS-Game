@@ -6,6 +6,5 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private string _currentStateName;
-    private IEnemyState _currentState;
 
 }

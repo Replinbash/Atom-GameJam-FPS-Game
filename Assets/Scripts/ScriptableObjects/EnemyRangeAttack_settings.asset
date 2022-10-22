@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: EnemyRangeAttack_settings
   m_EditorClassIdentifier: 
   _maxHealth: 50
+  _attackCooldown: 0.7
   _damage: 15
-  _attackSpeed: 1.55
+  _attackSpeed: 1.5
   WeaponSpawnPosition:
   - {x: -0.029, y: 0.096, z: -0.028}
   WeaponSpawnRotation:
   - {x: -0.050282843, y: 0.08951385, z: -0.63404983, w: 0.7664462}
   OverrideController: {fileID: 0}
-  _launchSpeed: 1
+  _launchSpeed: 50
   _fireRate: 2
