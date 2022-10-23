@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace GameJam.EnemyCore
+namespace GameJam.EnemyPatrol
 {
 	public class PatrolPoints : MonoBehaviour
 	{

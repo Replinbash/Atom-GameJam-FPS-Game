@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd409a4ccf6775045bbb8105045c5ea0, type: 3}
-  m_Name: Enemy Patrol Action
+  m_Name: Patrol Action
   m_EditorClassIdentifier: 

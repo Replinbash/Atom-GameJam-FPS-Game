@@ -11,6 +11,7 @@ namespace GameJam.FSM
 		[SerializeField] Dictionary<Type, Component> _cachedComponents;
 
 		public BaseState CurrentState { get; set; }
+		public static event Action EnemyEvent;				
 
 		private void Awake()
 		{
@@ -22,6 +23,7 @@ namespace GameJam.FSM
 		{
 			CurrentState.Execute(this);
 			_state = CurrentState.ToString();
+			EnemyEvent?.Invoke();
 		}
 
 		public new T GetComponent<T>() where T : Component

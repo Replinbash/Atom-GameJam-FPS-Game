@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e49e33e3c00bf1e41b2e0c9c0947f55b, type: 3}
-  m_Name: SpottedEnemy
+  m_Name: Spotted Enemy
   m_EditorClassIdentifier: 
   Decision: {fileID: 11400000, guid: c490872535a9dea468ec18650dee5ea5, type: 2}
-  TrueState: {fileID: 11400000, guid: 96790529a443f334f99406b62c660acc, type: 2}
+  TrueState: {fileID: 11400000, guid: 1585060982b529f428e7a266885c9efb, type: 2}
   FalseState: {fileID: 11400000, guid: d7a87ffd9abe01b48b756406ac0f043d, type: 2}

@@ -20,16 +20,10 @@ namespace GameJam.EnemyCombat
         protected Coroutine _startAttackProcess;
 
         protected bool _hasStopped = false;
-        protected bool _startAttack = false;
         protected bool _canAttack = false;
         protected float _timeOfLastAttack = 0;
 
-        protected const int RUN_SPEED = 10;
-        protected const int STOPPED_SPEED = 0;
-		protected static int ANIMATOR_PARAM_NPC_SPEED = Animator.StringToHash("Speed");
-
-
-		private void Awake()
+        private void Awake()
         {           
             _navMesh = GetComponent<NavMeshAgent>();
             _animator = GetComponentInChildren<Animator>();
@@ -40,22 +34,8 @@ namespace GameJam.EnemyCombat
         protected virtual void Start()
         {
 			SpawnWeapon();
+			_navMesh.speed = _enemySettings.WalkSpeed;
 		}
-
-        private void Update()
-        {
-			if (Input.GetKeyDown(KeyCode.T))
-            {
-                _startAttack = true;
-            }
-
-            if (_startAttack)
-            {
-				_startAttackProcess = StartCoroutine(AttackProcess());
-            }
-
-			_animator.SetFloat(ANIMATOR_PARAM_NPC_SPEED, _navMesh.velocity.magnitude);
-        }
 
         protected void SpawnWeapon()
         {
@@ -67,15 +47,18 @@ namespace GameJam.EnemyCombat
 
         protected void RotateToPlayer()
         {
-            Vector3 direction = Player.position - this.transform.position;
-            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = rotation;
-            //transform.LookAt(_player);
-        }
+			var towardsPlayer = Player.transform.position - transform.position;
+
+			transform.rotation = Quaternion.RotateTowards(
+				transform.rotation,
+				Quaternion.LookRotation(towardsPlayer),
+				Time.deltaTime * _enemySettings.TurnRate
+			);
+		}
 
 		protected abstract void AttackSequence(EnemyBaseAttackSO enemySettings);
 
-		protected IEnumerator AttackProcess()
+		public IEnumerator AttackProcess()
         {
             RotateToPlayer();
             var destinationToPlayer = Vector3.Distance(transform.position, Player.position);
@@ -83,8 +66,8 @@ namespace GameJam.EnemyCombat
             // Enemy playera doðru koþuyor.
             if (!_canAttack)
             {
+                _navMesh.speed = _enemySettings.RunSpeed;
                 _navMesh.SetDestination(Player.position);
-                _navMesh.speed = RUN_SPEED;
 			}  
 
             // Attack yaptýktan sonra bekleme süresi
@@ -97,7 +80,7 @@ namespace GameJam.EnemyCombat
             // Attack aný.
             if (destinationToPlayer < _navMesh.stoppingDistance)
             {
-				_navMesh.speed = STOPPED_SPEED;
+				_navMesh.speed = _enemySettings.StoppedSpeed;
 				AttackSequence(_enemySettings);
             }
 

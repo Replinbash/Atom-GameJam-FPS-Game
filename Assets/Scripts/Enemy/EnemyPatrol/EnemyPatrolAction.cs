@@ -2,7 +2,7 @@ using UnityEngine;
 using GameJam.FSM;
 using UnityEngine.AI;
 
-namespace GameJam.EnemyCore
+namespace GameJam.EnemyPatrol
 {
 	[CreateAssetMenu(menuName = "FSM/Actions/Patrol")]
 	public class EnemyPatrolAction : FSMAction
@@ -15,7 +15,6 @@ namespace GameJam.EnemyCore
 			if (patrolPoints.HasReached(navMeshAgent))
 			{
 				navMeshAgent.SetDestination(patrolPoints.GetNext().position);
-				navMeshAgent.speed = 5; // walk speed
 			}
 				
 		}

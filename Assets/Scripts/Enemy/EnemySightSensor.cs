@@ -31,7 +31,7 @@ namespace GameJam.EnemyCore
 
 			if (!Physics.Raycast(_ray, out var hit, 100, ~_ignoreMask))
 			{
-				return false;
+				return true;
 			}
 
 			if (hit.collider.CompareTag("Player"))

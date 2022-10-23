@@ -10,6 +10,7 @@ namespace GameJam.EnemyCore
 		public override bool Decide(BaseStateMachine stateMachine)
 		{
 			var enemySightSensor = stateMachine.GetComponent<EnemySightSensor>();
+			Debug.Log("Ping: " + enemySightSensor.Ping());
 			return enemySightSensor.Ping();
 		}
 	}

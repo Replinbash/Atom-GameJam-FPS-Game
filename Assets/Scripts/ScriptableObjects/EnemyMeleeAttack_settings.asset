@@ -13,13 +13,16 @@ MonoBehaviour:
   m_Name: EnemyMeleeAttack_settings
   m_EditorClassIdentifier: 
   _maxHealth: 75
-  _attackCooldown: 1
+  _turnRate: 50
+  _stoppedSpeed: 0
+  _walkSpeed: 5
+  _runSpeed: 10
   _damage: 10
   _attackSpeed: 1.5
+  _attackCooldown: 1
   WeaponSpawnPosition:
   - {x: -2.043768, y: 1.622714, z: 2.363403}
   - {x: -0.734, y: 0.211, z: 0.332}
   WeaponSpawnRotation:
   - {x: -0.66932636, y: -0.74120295, z: -0.04025637, w: -0.03162027}
   - {x: -0.30635867, y: 0.69772005, z: -0.3846107, w: -0.5209661}
-  OverrideController: {fileID: 0}
