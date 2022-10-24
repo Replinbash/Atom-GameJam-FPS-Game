@@ -1,3 +1,4 @@
+using GameJam.EnemyCore;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,13 +30,13 @@ namespace GameJam.EnemyCombat
 				_timeOfLastAttack = Time.time;
 				_canAttack = true;
 
-				if (_animator != null)
+				if (_animatonController.animator != null)
 				{
-					_animator.SetTrigger("rangeAttack");
+					_animatonController.animator.SetTrigger(EnemyAnimatonController.ANIMATOR_PARAM_NPC_RANGE_ATTACK);
 				}
 
-				Debug.Log("Bowcu Attack Yaptý");
 				StartCoroutine(GetArrow(3));
+				Debug.Log("Bowcu Attack Yaptý");
 			}
 		}
 

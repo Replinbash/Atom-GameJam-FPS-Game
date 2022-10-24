@@ -10,14 +10,13 @@ namespace GameJam.EnemyCombat
     {
 		[SerializeField] protected Transform[] _weaponTransform;
 		[SerializeField] protected GameObject[] _weaponPrefab;
-		[SerializeField] protected EnemyBaseAttackSO _enemySettings;
+		[SerializeField] protected EnemyBaseAttackSO _baseSettings;
 		[SerializeField] protected internal Transform Player;
 
 		protected NavMeshAgent _navMesh = null;
-        protected Animator _animator = null;
         protected EnemyStats _enemyStats = null;
         protected CharacterStats _playerStats = null;
-        protected Coroutine _startAttackProcess;
+        protected EnemyAnimatonController _animatonController = null;
 
         protected bool _hasStopped = false;
         protected bool _canAttack = false;
@@ -26,15 +25,15 @@ namespace GameJam.EnemyCombat
         private void Awake()
         {           
             _navMesh = GetComponent<NavMeshAgent>();
-            _animator = GetComponentInChildren<Animator>();
             _enemyStats = GetComponent<EnemyStats>();
-            _playerStats = Player.GetComponent<CharacterStats>();            
+            _playerStats = Player.GetComponent<CharacterStats>();
+            _animatonController = GetComponent<EnemyAnimatonController>();
         }
 
         protected virtual void Start()
         {
 			SpawnWeapon();
-			_navMesh.speed = _enemySettings.WalkSpeed;
+			_navMesh.speed = _baseSettings.WalkSpeed;
 		}
 
         protected void SpawnWeapon()
@@ -52,7 +51,7 @@ namespace GameJam.EnemyCombat
 			transform.rotation = Quaternion.RotateTowards(
 				transform.rotation,
 				Quaternion.LookRotation(towardsPlayer),
-				Time.deltaTime * _enemySettings.TurnRate
+				Time.deltaTime * _baseSettings.TurnRate
 			);
 		}
 
@@ -66,22 +65,22 @@ namespace GameJam.EnemyCombat
             // Enemy playera doðru koþuyor.
             if (!_canAttack)
             {
-                _navMesh.speed = _enemySettings.RunSpeed;
+                _navMesh.speed = _baseSettings.RunSpeed;
                 _navMesh.SetDestination(Player.position);
 			}  
 
             // Attack yaptýktan sonra bekleme süresi
             if (destinationToPlayer > _navMesh.stoppingDistance && _canAttack)
             {
-                yield return new WaitForSeconds(_enemySettings.AttackCooldown);
+                yield return new WaitForSeconds(_baseSettings.AttackCooldown);
                 _canAttack = false;
             }
 
             // Attack aný.
             if (destinationToPlayer < _navMesh.stoppingDistance)
             {
-				_navMesh.speed = _enemySettings.StoppedSpeed;
-				AttackSequence(_enemySettings);
+				_navMesh.speed = _baseSettings.StoppedSpeed;
+				AttackSequence(_baseSettings);
             }
 
             // Enemy saldýrýya geciyor

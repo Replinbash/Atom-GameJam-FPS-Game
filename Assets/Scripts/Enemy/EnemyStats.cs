@@ -1,5 +1,6 @@
 using UnityEngine;
 using GameJam.EnemyCombat;
+using UnityEngine.AI;
 
 namespace GameJam.EnemyCore
 {
@@ -48,7 +49,7 @@ namespace GameJam.EnemyCore
         {
             base.Die();
             GetComponent<Animator>().SetTrigger("die");
-            GetComponent<EnemyBaseAttack>().enabled = false;
+            GetComponent<NavMeshAgent>().isStopped = true;
 			GetComponent<CapsuleCollider>().enabled = false;
 			Destroy(gameObject, 3);
         }       
